@@ -8,4 +8,13 @@ public class TrackController {
     public String track() {
         return "Greetings from Spring Boot!";
     }
+
+
+
+    @RequestMapping("/api/modify/change/status/headNo")
+    public String modify() {
+        return "Greetings from Spring Boot!";
+    }
+
+
 }
