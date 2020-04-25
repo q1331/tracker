@@ -1,11 +1,12 @@
 package com.wangshangyi.tracker.track;
+
 import com.wangshangyi.tracker.Traceno;
 import com.wangshangyi.tracker.TracenoExample;
 import com.wangshangyi.tracker.dao.TracenoMapper;
 import com.wangshangyi.tracker.util.ResponseUtil;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 
@@ -30,9 +31,11 @@ public class TrackController {
         }else{
             TracenoExample example = new TracenoExample();
             example.or().andWidEqualTo(String.valueOf(wid));
+            long result = tracenoMapper.countByExample(example);
+            System.out.println("result  is  " + result);
             Traceno tcn = tracenoMapper.selectOneByExample(example);
             tcn.setStatus(status);
-            Integer result = tracenoMapper.updateByPrimaryKey(tcn);
+//            Integer result = tracenoMapper.updateByPrimaryKey(tcn);
             return ResponseUtil.ok(result);
         }
 

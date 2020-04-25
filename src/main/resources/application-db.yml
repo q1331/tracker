@@ -6,7 +6,10 @@ pagehelper:
 
 spring:
   datasource:
-      url:  jdbc:mysql://172.17.16.6:3306/theway?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&serverTimezone=Asia/Shanghai
+      # 外网访问
+      url:  jdbc:mysql://sh-cdb-4o664jz6.sql.tencentcdb.com:61447/trace?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&serverTimezone=Asia/Shanghai
+      # 内网访问
+      # url:  jdbc:mysql://172.17.16.6:3306/trace?useUnicode=true&autoReconnect=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false&serverTimezone=Asia/Shanghai
       username:  root
       password:  Theway123
       driver-class-name: com.mysql.jdbc.Driver
