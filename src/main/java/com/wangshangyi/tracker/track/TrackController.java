@@ -1,33 +1,12 @@
 package com.wangshangyi.tracker.track;
-
-import com.wangshangyi.tracker.Traceno;
-import com.wangshangyi.tracker.TracenoExample;
-import com.wangshangyi.tracker.dao.TracenoMapper;
-import com.wangshangyi.tracker.util.CharUtil;
-import com.wangshangyi.tracker.util.LocalStorage;
-import com.wangshangyi.tracker.util.ResponseUtil;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.annotation.Resource;
-import javax.crypto.spec.PSource;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMapping;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.MediaType;
 
 @RestController
 public class TrackController {
@@ -38,8 +17,18 @@ public class TrackController {
     LocalStorage localStorage = new LocalStorage();
 
     @RequestMapping("/track")
-    public String track() {
-        return "Greetings from Spring Boot!";
+    public String track(@RequestParam String number) {
+        Client client = ClientBuilder.newClient();
+        Response response = client.target("https://private-anon-8fc1c44c56-dhltrackingapi.apiary-mock.com/tracking/v1/mailitems/"+number)
+                .request(MediaType.TEXT_PLAIN_TYPE)
+                .header("Accept", "application/json")
+                .header("Authorization", "Bearer [token]")
+                .get();
+        System.out.println("status: " + response.getStatus());
+        System.out.println("param: " + number);
+        System.out.println("headers: " + response.getHeaders());
+        System.out.println("body:" + response.readEntity(String.class));
+        return response.readEntity(String.class);
     }
 
 
